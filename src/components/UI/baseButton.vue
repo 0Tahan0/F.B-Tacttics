@@ -3,7 +3,7 @@
     :disabled="disabled"
     @click="$emit('click', $event)"
     :type="type"
-    class="py-1 m-1 px-3 font-medium transition duration-300 backdrop-blur-md shadow-md text-xs md:text-sm"
+    class="py-1 m-1 px-3 font-medium transition duration-300 backdrop-blur-md shadow-md text-xs md:text-sm "
     :class="
       disabled
         ? 'dark:bg-gray-950/70 dark:text-gray-700 bg-gray-200 text-gray-50'

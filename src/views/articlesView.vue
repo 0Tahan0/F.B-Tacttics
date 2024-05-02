@@ -1,19 +1,82 @@
 <template>
   <div id="articlePage" class="fade h-screen">
     <the-nav :hasAccount="hasAccount" />
+    <!-- <base-card class="sticky top-0 left-0"> </base-card> -->
     <div class="h-full">
-      <div class="container mx-auto flex overflow-y-auto h-full">
-        <div class="mx-auto md:w-2/3 lg:w-1/2 overflow-y-auto">
-          <the-post
-            v-for="(i, ind) in getPosts"
-            :key="ind"
-            :info="i"
-          ></the-post>
+      <div
+        class="container mx-auto overflow-y-auto h-full flex justify-between"
+      >
+        <base-card class="hidden lg:block flex-grow">
+          <div>
+            <ul>
+              <li
+                v-for="(i, ind) in sections"
+                :key="ind"
+                :class="selectedCompo == ind ? 'ring-1 ring-mainColor' : ''"
+                class="flex items-center justify-between cursor-pointer hover:dark:bg-dark3Color hover:bg-light3Color p-1 rounded-md mt-2 hover:scale-105 transition"
+                @click="selectedCompo = ind"
+              >
+                <span :class="selectedCompo == ind ? 'text-mainColor' : ''"
+                  >{{ i.name }}
+                </span>
+                <span
+                  :notice="
+                    i.coputedName
+                      ? this[i.coputedName].length > 0
+                        ? this[i.coputedName].length > 99
+                          ? '+99'
+                          : this[i.coputedName].length
+                        : null
+                      : null
+                  "
+                >
+                  <the-icon
+                    :icon="i.icon"
+                    class="bg-dark2Color dark:bg-light2Color dark:text-dark2Color"
+                  />
+                </span>
+              </li>
+            </ul>
+          </div>
+        </base-card>
+        <!-- slide for right side -->
+
+        <slide-side
+          class="lg:hidden"
+          :open="rightSlide"
+          right
+          @open="rightSlide = !rightSlide"
+        >
+          <ul>
+            <li
+              v-for="(i, ind) in sections"
+              :key="ind"
+              :class="selectedCompo == ind ? 'ring-1 ring-mainColor' : ''"
+              class="flex text-sm items-center justify-between cursor-pointer hover:dark:bg-dark3Color hover:bg-light3Color p-1 rounded-md mt-2 hover:scale-105 transition"
+              @click="selectedCompo = ind"
+            >
+              <span :class="selectedCompo == ind ? 'text-mainColor' : ''">{{
+                i.name
+              }}</span>
+              <the-icon
+                :icon="i.icon"
+                class="bg-dark2Color dark:bg-light2Color dark:text-dark2Color"
+              />
+            </li>
+          </ul>
+        </slide-side>
+        <!-- end slide for right side -->
+        <div class="overflow-y-auto lg:w-1/2 w-full">
+          <keep-alive>
+            <component :is="sections[selectedCompo].compoName"></component>
+          </keep-alive>
         </div>
+        <base-card class="hidden lg:block flex-grow">left side</base-card>
       </div>
     </div>
   </div>
 </template>
+
 <script>
 // import router from "@/router";
 export default {
@@ -34,12 +97,40 @@ export default {
   props: ["hasAccount"],
   data() {
     return {
-      showSlide: false,
+      rightSlide: false,
+      selectedCompo: 0,
+      sections: [
+        {
+          compoName: "all-articles",
+          name: "المقالات الحديثة",
+          icon: ["fas", "newspaper"],
+          coputedName: undefined,
+        },
+        {
+          compoName: "my-articles",
+          name: "مقالاتي",
+          icon: ["fas", "folder-closed"],
+          coputedName: "getOwnerPosts",
+        },
+        {
+          compoName: "saved-articles",
+          name: "المقالات المحفوظة",
+          icon: ["fas", "cloud"],
+          coputedName: "getSavedPosts",
+        },
+      ],
     };
   },
+
   computed: {
-    getPosts() {
-      return this.$store.state.info;
+    getOwnerPosts() {
+      return this.$store.getters.getOwnerPosts;
+    },
+    getSavedPosts() {
+      return this.$store.getters.getSavedPosts;
+    },
+    ownerData() {
+      return this.$store.state.personalData;
     },
   },
 };

@@ -1,5 +1,5 @@
 <template>
-  <div ref="carousel" class="relative" dir="ltr">
+  <div ref="carousel" class="relative">
     <div class="md:px-10 py-10 md:py-0 h-full max-h-full min-h-full w-full">
       <slot></slot>
     </div>
@@ -15,12 +15,12 @@
     >
       <fs-icon :icon="['fas', 'angle-left']" />
     </button>
-    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex space-x-2">
+    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 flex">
       <button
         v-for="(i, ind) in length"
         :key="ind"
         @click="current = ind"
-        class="md:w-4 md:h-4 h-3 w-3 rounded-full bg-gray-500"
+        class="md:w-4 mx-1 md:h-4 h-3 w-3 rounded-full bg-gray-500"
         :class="current == ind ? 'bg-opacity-60' : 'bg-opacity-30'"
       ></button>
     </div>

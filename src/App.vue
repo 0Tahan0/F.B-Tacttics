@@ -2,7 +2,6 @@
   <div
     id="app"
     class="dark:bg-darkColor dark:text-lightColor text-darkColor transition-colors duration-500 h-full bg-lightColor"
-    dir="rtl"
   >
     <RouterView
       :hasAccount="hasAccount"

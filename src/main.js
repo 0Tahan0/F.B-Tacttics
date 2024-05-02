@@ -63,7 +63,7 @@ app.component("the-article", theArticle);
 import theIcon from "@/components/templates/theIcon.vue";
 app.component("the-icon", theIcon);
 
-import thePost from "@/components/templates/thePost.vue";
+import thePost from "@/components/artticlesComp/thePost.vue";
 app.component("the-post", thePost);
 
 import theSwiper from "@/components/templates/theSwiper.vue";
@@ -74,11 +74,17 @@ app.component("the-carousel", theCarousel);
 import theWindow from "@/components/templates/theWindow.vue";
 app.component("the-window", theWindow);
 
-import theComment from "@/components/templates/theComment.vue";
+import theComment from "@/components/artticlesComp/theComment.vue";
 app.component("the-comment", theComment);
 
 app.component("fs-icon", FontAwesomeIcon);
-
+// --------------------------------
+import allArticles from "./components/artticlesComp/articlesSections/allArticles.vue";
+app.component("all-articles", allArticles);
+import myArticles from "./components/artticlesComp/articlesSections/myArticles.vue";
+app.component("my-articles", myArticles);
+import savedArticles from "./components/artticlesComp/articlesSections/savedArticles.vue";
+app.component("saved-articles", savedArticles);
 // --------------------------------
 app.use(VueAxios, axios);
 app.use(store);

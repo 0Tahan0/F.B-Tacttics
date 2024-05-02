@@ -6,8 +6,8 @@
       class="fixed top-0 left-0 h-screen w-screen z-50"
       :class="hasBlur"
     >
-      <div
-        class="flex flex-col justify-center mx-auto shadow-lg shadow-black fixed rounded bg-lightColor dark:bg-darkColor"
+      <base-card
+        class="flex flex-col justify-center mx-auto  fixed rounded bg-lightColor dark:bg-darkColor"
         :class="checkSizeShape"
         :style="
           fullWindow ? 'max-height:100%;' : 'max-height: calc(100% - 15vh)'
@@ -51,7 +51,7 @@
           <slot name="footer"></slot>
         </footer>
         <!-- end footer -->
-      </div>
+      </base-card>
     </div>
   </teleport>
 </template>

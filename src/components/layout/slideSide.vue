@@ -1,20 +1,47 @@
 <template>
   <!--   backdrop-blur-3xl-->
-  <div
-    :class="custoiz"
-    class="z-50 md:hidden flex p-5 shadow-lg shadow-gray-900 transition-all flex-col fixed top-0 h-full w-3/4 sm:w-1/2 bg-white dark:bg-dark2Color"
+  <base-card
+    :class="customize"
+    class="z-50 m-0 flex p-0 shadow-lg shadow-gray-900 transition-transform duration-500 flex-col fixed top-0 h-full w-3/4 sm:w-1/2 bg-light2Color dark:bg-dark2Color"
   >
-    <div>
-      <slot name="header"></slot>
+    <div class="relative p-5 h-full w-full">
+      <div>
+        <slot name="header"></slot>
+      </div>
+      <div>
+        <slot></slot>
+      </div>
+
+      <button
+        @click="$emit('open')"
+        :class="
+          right
+            ? 'left-0 -translate-x-1/2 md:border-l-4 '
+            : 'right-0 translate-x-1/2 md:border-r-4'
+        "
+        class="-z-10 outline-none rounded-full border-mainColor absolute top-1/2 w-10 h-7 md:h-10 md:w-14 -translate-y-1/2 dark:bg-dark2Color bg-light2Color"
+      >
+        <fs-icon
+          :icon="[
+            'fas',
+            right
+              ? open
+                ? 'angle-right'
+                : 'angle-left'
+              : open
+              ? 'angle-left'
+              : 'angle-right',
+          ]"
+          class="block"
+          :class="right ? 'ms-auto me-3 ' : 'me-auto ms-3 '"
+        />
+      </button>
     </div>
-    <div>
-      <slot></slot>
-    </div>
-  </div>
+  </base-card>
 </template>
 <script>
 export default {
-  emits: ["click"],
+  emits: ["open"],
 
   props: {
     open: {
@@ -27,7 +54,7 @@ export default {
     },
   },
   computed: {
-    custoiz() {
+    customize() {
       if (this.open) {
         if (this.right) return "right-0 translate-0";
         return "left-0 translate-0";
@@ -37,7 +64,7 @@ export default {
   },
 };
 </script>
-<style scoped>
+<!-- <style scoped>
 a.router-link-exact-active {
   position: relative;
   color: #fff !important;
@@ -46,4 +73,4 @@ a.router-link-exact-active .tap,
 a.router-link-exact-active .icon {
   background: var(--mainColor);
 }
-</style>
+</style> -->

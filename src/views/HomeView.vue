@@ -153,7 +153,7 @@
               v-for="i in getPosts"
               :key="i.postId"
               class="pointer-events-none select-none"
-              toolTip="للقراءة فقط"
+              
             >
               <base-card class="w-fit"
                 ><base-title

@@ -277,6 +277,20 @@ const store = createStore({
         return result;
       }
     },
+    getSavedPosts(state) {
+      let _savedPosts = [];
+      state.savedPosts.forEach((el) => {
+        const ps = state.info.find((p) => p.postId == el);
+        if (ps) _savedPosts.push(ps);
+      });
+      return _savedPosts;
+    },
+    getSavedPostsLength(state){
+      return state.savedPosts.length
+    },
+    getOwnerPosts(state) {
+      return state.info.filter((el) => el.userId == state.personalData.id);
+    },
   },
   mutations: {
     toggleLike(state, ids) {
@@ -322,11 +336,33 @@ const store = createStore({
       this.getters.getCommentPostById(payload.ids).updated = true;
     },
     savePost(state, id) {
-      state.savedPosts.push(this.getters.getCommentPostById(id));
+      state.savedPosts.push(id);
     },
     popSavedPost(state, id) {
+      state.savedPosts = state.savedPosts.filter((el) => el != id);
+    },
 
-      state.savedPosts =state.savedPosts.filter((el) => el.postId != id);
+    createPost(state, txt) {
+      const owner = state.personalData;
+      this.state.info.push({
+        userId: owner.id,
+        postId: Date.now(),
+        userName: owner.name,
+        userImg: owner.img,
+        date: "now",
+        postText: txt,
+        likes: {
+          likesCount: 0,
+          likedUsers: [],
+        },
+        deleteComment: function (id) {
+          this.replies = this.replies.filter((el) => el.commentId != id);
+        },
+        replies: [],
+      });
+    },
+    deletePost(state, id) {
+      state.info = state.info.filter((el) => el.postId != id);
     },
   },
   actions: {

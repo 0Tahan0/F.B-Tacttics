@@ -1,7 +1,11 @@
 <template>
   <div
-    class="max-w-32 flex flex-col items-center justify-center max-h-full p-1 "
-    :class="bgNone ? '':'relative before:absolute before:w-screen before:h-full before:top-0 before:left-1/2 before:-translate-x-1/2 before:-z-10 before:bg-gradient-to-r before:from-mainColor before:from-45% before:to-transparent before:to-50% z-10'"
+    class="max-w-32 flex flex-col items-center justify-center max-h-full p-1 select-none pointer-events-none"
+    :class="
+      bgNone
+        ? ''
+        : 'relative before:absolute before:w-screen before:h-full before:top-0 before:left-1/2 before:-translate-x-1/2 before:-z-10 before:bg-gradient-to-r before:from-mainColor before:from-45% before:to-transparent before:to-50% z-10'
+    "
   >
     <img
       src="@/assets/images/F.B.png"

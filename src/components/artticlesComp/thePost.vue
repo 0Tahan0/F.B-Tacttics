@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="my-2 m-1 md:m-2 h-fit bg-light2Color dark:bg-dark2Color border dark:border-slate-900 md:px-4 px-2 rounded shadow-md shadow-black"
-  >
+  <base-card class="my-2 h-fit bg-light2Color dark:bg-dark2Color md:px-4 px-2">
     <!-- header -->
     <div class="flex items-center py-2">
       <div
@@ -23,16 +21,70 @@
           {{ info.date }}
         </p>
       </div>
-      <span
-        :tooltip="isSaved ? 'إلغاء الحفظ' : 'حفظ'"
-        toolTipRight
-        class="ms-auto cursor-pointer transition-colors hover:text-mainColor"
-        :class="isSaved ? 'text-mainColor' : ''"
-        @click="savePopPost()"
-      >
-        <span v-if="isSaved" class="text-xs mx-1">تم الحفظ</span>
-        <fs-icon :icon="[isSaved ? 'fas' : 'far', 'bookmark']"
-      /></span>
+      <div class="ms-auto flex items-center">
+        <span
+          :tooltip="isSaved ? 'إلغاء الحفظ' : 'حفظ'"
+          toolTipRight
+          class="cursor-pointer transition-colors hover:text-mainColor"
+          :class="isSaved ? 'text-mainColor' : ''"
+          @click="savePopPost()"
+        >
+          <span v-if="isSaved" class="text-xs mx-1">تم الحفظ</span>
+          <fs-icon :icon="[isSaved ? 'fas' : 'far', 'bookmark']"
+        /></span>
+        <the-menu right>
+          <template #button>
+            <button
+              class="editBtn text-lg text-center p-1 h-fit mt-2 ms-2 relative"
+            >
+              <fs-icon :icon="['fas', 'ellipsis']" />
+            </button>
+          </template>
+          <button
+            v-if="isOwner"
+            @click="removingWindow = true"
+            class="hover:dark:bg-dark3Color hover:bg-light2Color flex text-xs items-center w-full p-2 rounded-md"
+          >
+            <fs-icon :icon="['fas', 'trash']"></fs-icon>
+            <span class="ms-3">حذف</span>
+
+
+
+<the-window
+    slide
+    :open="removingWindow"
+    @close="removingWindow = $event"
+    noResize
+    title="حذف تعليق"
+  >
+    <div>
+      <p class="text-md font-medium">هل تريد بالتأكيد حذف التعليق؟</p>
+      <div class="flex justify-end">
+        <base-button
+          @click="removingWindow = false"
+          class="w-20 bg-transparent hover:dark:bg-dark2Color hover:bg-lightColor"
+          >لا</base-button
+        >
+        <base-button
+          class="bg-red-500 text-white hover:bg-red-700 w-20"
+          @click="deletePost()"
+          >نعم</base-button
+        >
+      </div>
+    </div>
+  </the-window>
+
+
+          </button>
+
+          <button
+            class="hover:dark:bg-dark3Color hover:bg-light2Color flex text-xs items-center w-full p-2 rounded-md"
+          >
+            <fs-icon :icon="['fas', 'flag']"></fs-icon>
+            <span class="ms-3">تقرير</span>
+          </button>
+        </the-menu>
+      </div>
     </div>
     <!-- end header -->
     <!-- content -->
@@ -70,7 +122,7 @@
           getCommentCount
         }}</span>
         <!-- share count -->
-        <span class="w-full" toolTip="عدد المشاركات">519</span>
+        <!-- <span class="w-full" toolTip="عدد المشاركات">0</span> -->
       </div>
 
       <div
@@ -78,33 +130,29 @@
       >
         <!-- like button -->
 
-        <button
+        <base-button
           @click="likeInc()"
-          :class="
-            getLikeStatus
-              ? 'text-mainColor '
-              : 'hover:dark:text-white hover:text-black'
-          "
-          class="py-2 shadow-none hover:dark:bg-gray-700 hover:bg-light2Color w-full flex items-center justify-center"
+          :class="getLikeStatus ? 'text-mainColor ' : ''"
+          class="py-2 shadow-none hover:dark:bg-dark3Color hover:bg-light3Color w-full flex items-center justify-center"
         >
           <fs-icon class="text-2xl" :icon="['far', 'thumbs-up']" />
           <span class="text-xs md:text-sm ms-3">أعجبني</span>
-        </button>
+        </base-button>
         <!-- comment button -->
-        <button
+        <base-button
           @click="opendComment = true"
-          class="py-2 shadow-none hover:dark:text-white hover:dark:bg-gray-700 hover:text-black hover:bg-light2Color w-full flex items-center justify-center"
+          class="py-2 shadow-none hover:dark:bg-dark3Color hover:text-black hover:bg-light3Color w-full flex items-center justify-center"
         >
           <fs-icon class="text-2xl" :icon="['far', 'comment']" />
           <span class="text-xs md:text-sm ms-3">تعليق</span>
-        </button>
+        </base-button>
         <!-- share button -->
-        <button
-          class="py-2 shadow-none hover:dark:text-white hover:dark:bg-gray-700 hover:text-black hover:bg-light2Color w-full flex items-center justify-center"
+        <!-- <base-button
+          class="py-2 shadow-none hover:dark:bg-dark3Color hover:text-black hover:bg-light3Color w-full flex items-center justify-center"
         >
           <fs-icon class="text-2xl" :icon="['fas', 'share']" />
           <span class="text-xs md:text-sm ms-3">مشاركة</span>
-        </button>
+        </base-button> -->
       </div>
     </div>
     <!-- end footer -->
@@ -181,13 +229,14 @@
     </the-window>
     <!-- end comment side -->
     <!-- end windows -->
-  </div>
+  </base-card>
 </template>
 <script>
 export default {
   props: ["info"],
   data() {
     return {
+      removingWindow: false,
       open: false,
       opendComment: false,
       windowVal: "",
@@ -197,6 +246,9 @@ export default {
     };
   },
   computed: {
+    ownerData() {
+      return this.$store.state.personalData;
+    },
     getCommentCount() {
       return this.$store.getters.getCommentCount(this.info.postId);
     },
@@ -213,9 +265,12 @@ export default {
     isSaved() {
       return (
         this.$store.state.savedPosts.find(
-          (el) => el.postId == this.info.postId
+          (el) => el == this.info.postId
         ) != undefined
       );
+    },
+    isOwner() {
+      return this.info.userId == this.ownerData.id;
     },
   },
   methods: {
@@ -281,6 +336,10 @@ export default {
         });
         this.reset();
       }
+    },
+     deletePost() {
+      this.removingWindow = false;
+      this.$store.commit('deletePost',this.info.postId)
     },
   },
   watch: {

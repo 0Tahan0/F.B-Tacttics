@@ -1,6 +1,6 @@
 <template>
   <!-- backdrop-blur-3xl sticky top-0 left-0 z-50 -->
-  <nav class="text-sm bg-lightColor dark:bg-dark2Color">
+  <nav class="text-sm bg-lightColor dark:bg-dark2Color shadow-md">
     <div class="container mx-auto">
       <div class="flex items-center min-h-20">
         <router-link
