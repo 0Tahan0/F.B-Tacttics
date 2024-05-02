@@ -1,0 +1,185 @@
+@font-face {
+  font-family: "alex";
+  src: url(@/assets/Alexandria/Alexandria-VariableFont_wght.ttf);
+}
+:root {
+  /* --mainColor: #2aa512;
+  --darkColor: #101013;
+  --dark2Color: #202027; */
+  --mainColor: #23e148;
+  --darkColor: #050510;
+  --dark2Color: #151520;
+  --lightColor: #e7e7e7;
+  --light2Color: #dadada;
+  --light3Color: #cfcfcf;
+  --dark3Color: #303035;
+  --temp: #010410;
+}
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+html {
+  scroll-behavior: smooth;
+}
+html[data-mode="dark"] {
+  color-scheme: dark;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  width: 100%;
+  font-family: "alex";
+}
+
+.bg-base {
+  --s: calc(70px + 3vw); /* control the size */
+
+  --_g: #0000 90deg, #063e5e33 0;
+  background: conic-gradient(from 90deg at 1px 1px, var(--_g)),
+    conic-gradient(from 90deg at 1px 1px, var(--_g));
+  background-size: var(--s) var(--s), calc(var(--s) / 5) calc(var(--s) / 5);
+}
+.bg-base-white {
+  --s: calc(70px + 3vw); /* control the size */
+
+  --_g: #0000 90deg, #fdfdfd33 0;
+  background: conic-gradient(from 90deg at 1px 1px, var(--_g)),
+    conic-gradient(from 90deg at 1px 1px, var(--_g));
+  background-size: var(--s) var(--s), calc(var(--s) / 5) calc(var(--s) / 5);
+}
+.anime {
+  position: relative !important;
+  overflow-x: hidden !important;
+}
+.anime::after {
+  content: "";
+  position: absolute;
+  left: calc(-1px - var(--size));
+  top: 0%;
+  /* box-shadow: 0 0 var(--size) calc(var(--size) / 10) var(--bg); */
+
+  width: var(--size);
+  height: 100%;
+  animation-name: shadowMove;
+  animation-duration: 15s;
+  animation-delay: 1s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+@keyframes shadowMove {
+  50% {
+    /* transform: translateX(); */
+    left: calc(100% + var(--size));
+  }
+  100% {
+    left: calc(0% - var(--size));
+  }
+}
+.fade {
+  animation-name: fade;
+  animation-duration: 0.3s;
+}
+
+@keyframes fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.fade-out {
+  animation-name: fade-out;
+  animation-duration: 0.3s;
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+::selection {
+  /* background-color: var(--secondColor);
+  color: var(--mainColor); */
+  background-color: var(--mainColor);
+  color: #fff;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+html[data-mode="dark"] ::-webkit-scrollbar {
+  background: var(--darkColor);
+}
+html[data-mode="light"] ::-webkit-scrollbar {
+  background: var(--lightColor);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--mainColor);
+}
+[toolTip] {
+  position: relative;
+}
+[toolTip]:hover::after {
+  visibility: visible;
+  opacity: 1;
+}
+html[data-mode="dark"] *[toolTip]::after {
+  background-color: var(--darkColor);
+  /* color: #fff; */
+}
+[toolTip]::after {
+  transition: 0.2s;
+  transition-delay: 0.2s;
+
+  position: absolute;
+  content: attr(toolTip);
+  top: 100%;
+  left: 25%;
+  /* transform: translate(0, 0); */
+  /* ----------------- */
+  /* display: none; */
+  visibility: hidden;
+  opacity: 0;
+  /* border: 1px solid var(--mainColor); */
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.15rem;
+  color: var(--mainColor);
+  background-color: var(--darkColor);
+
+  /* backdrop-filter: blur(10px); */
+  font-size: calc(9px + 0.2vw);
+  box-shadow: 0 0 3px 0 #0005;
+  /* animation-name: fade; */
+  /* animation-duration: 0.3s; */
+  z-index: 9999;
+  text-wrap: nowrap;
+}
+[toolTipLeft][toolTip]::after {
+  left: 0% !important;
+  top: 0% !important;
+  transform: translate(-125%, 0%) !important;
+}
+[toolTipRight][toolTip]::after {
+  left: 0% !important;
+  top: 0% !important;
+  transform: translate(50%, 0%) !important;
+}
+[toolTipTop][toolTip]::after {
+  left: 0% !important;
+  top: 0% !important;
+  transform: translate(0%, -125%) !important;
+}
+[toolTipBottom][toolTip]::after {
+  left: 0% !important;
+  top: 0% !important;
+  transform: translate(0%, 100%) !important;
+}
