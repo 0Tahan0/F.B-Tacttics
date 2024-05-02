@@ -58,10 +58,22 @@
               <span :class="selectedCompo == ind ? 'text-mainColor' : ''">{{
                 i.name
               }}</span>
-              <the-icon
-                :icon="i.icon"
-                class="bg-dark2Color dark:bg-light2Color dark:text-dark2Color"
-              />
+              <span
+                  :notice="
+                    i.coputedName
+                      ? this[i.coputedName].length > 0
+                        ? this[i.coputedName].length > 99
+                          ? '+99'
+                          : this[i.coputedName].length
+                        : null
+                      : null
+                  "
+                >
+                  <the-icon
+                    :icon="i.icon"
+                    class="bg-dark2Color dark:bg-light2Color dark:text-dark2Color"
+                  />
+                </span>
             </li>
           </ul>
         </slide-side>
