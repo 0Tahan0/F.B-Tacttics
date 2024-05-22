@@ -6,17 +6,42 @@ const routes = [
     name: "الصفحة الرئيسية",
     // component: HomeView,
     component: () => import("../views/HomeView.vue"),
-    props: { icon: "house" },
+    icon: "house",
   },
   {
-    path: "/about",
-    name: "حول",
+    path: "/profile",
+    name: "الصفحة الشخصية",
     // route level code-splitting
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
-    props: { icon: "phone" },
+      import(
+        /* webpackChunkName: "about" */ "../views/profile/profileView.vue"
+      ),
+    icon: "user-circle",
+    // props: true,
+    // props:default: true,
+  },
+  {
+    path: "/userProfile",
+    name: "صفحة مستخدم",
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () =>
+      import(
+        /* webpackChunkName: "about" */ "../views/profile/userProfile.vue"
+      ),
+    icon: "user-circle",
+    // props: true,
+    // props:default: true,
+    children: [
+      {
+        path: "/userProfile:catchAll(.*)",
+        name: "errorPage",
+        component: () => import("../views/errorPage.vue"),
+      },
+    ],
   },
   {
     path: "/login",
@@ -27,20 +52,26 @@ const routes = [
   {
     path: "/articles",
     name: "المقالات",
-    component: () => import("../views/articlesView.vue"),
-    props: { icon: "newspaper" },
+    component: () => import("../views/articles/articlesView.vue"),
+    icon: "newspaper",
+    children: [
+      {
+        path: ":id",
+
+        component: () =>
+          import("../views/articles/components/savedArticles.vue"),
+      },
+    ],
   },
   {
-    path:'/:catchAll(.*)',
-    name:'errorPage',
-    component:()=>import('../views/errorPage.vue')
+    path: "/:catchAll(.*)",
+    name: "errorPage",
+    component: () => import("../views/errorPage.vue"),
   },
- 
 ];
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
-
   routes,
 });
 export default router;

@@ -16,10 +16,10 @@
         @click="$emit('open')"
         :class="
           right
-            ? 'left-0 -translate-x-1/2 md:border-l-4 '
-            : 'right-0 translate-x-1/2 md:border-r-4'
+            ? 'left-0 -translate-x-1/2  border-l'
+            : 'right-0 translate-x-1/2 border-r'
         "
-        class="-z-10 outline-none rounded-full border-mainColor absolute top-1/2 w-10 h-7 md:h-10 md:w-14 -translate-y-1/2 dark:bg-dark2Color bg-light2Color"
+        class="-z-10 text-mainColor outline-none rounded-full border-mainColor absolute top-1/2 w-16 h-10 md:h-10 -translate-y-1/2 dark:bg-dark2Color bg-light2Color"
       >
         <fs-icon
           :icon="[

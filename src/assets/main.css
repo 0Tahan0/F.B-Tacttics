@@ -7,12 +7,12 @@
   --darkColor: #101013;
   --dark2Color: #202027; */
   --mainColor: #23e148;
-  --darkColor: #050510;
-  --dark2Color: #151520;
+  --darkColor: #000;
+  --dark2Color: #111;
+  --dark3Color: #222;
   --lightColor: #e7e7e7;
   --light2Color: #dadada;
   --light3Color: #cfcfcf;
-  --dark3Color: #303035;
   --temp: #010410;
 }
 * {
@@ -84,6 +84,32 @@ html[dir="rtl"] * {
     left: calc(0% - var(--size));
   }
 }
+.slide {
+  animation-name: slide;
+  animation-duration: 0.3s;
+}
+
+@keyframes slide {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(0%);
+  }
+}
+.slide-up {
+  animation-name: slideUp;
+  animation-duration: 0.3s;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: translateY(0%);
+  }
+}
 .fade {
   animation-name: fade;
   animation-duration: 0.3s;
@@ -116,7 +142,7 @@ html[dir="rtl"] * {
   background-color: var(--mainColor);
   color: #fff;
 }
-::-webkit-scrollbar {
+*::-webkit-scrollbar {
   width: 10px;
 }
 html[data-mode="dark"] ::-webkit-scrollbar {
@@ -127,6 +153,7 @@ html[data-mode="light"] ::-webkit-scrollbar {
 }
 ::-webkit-scrollbar-thumb {
   background: var(--mainColor);
+  border-radius: 100vmax;
 }
 [toolTip] {
   position: relative;
@@ -191,7 +218,7 @@ html[data-mode="dark"] *[toolTip]::after {
   position: relative;
 }
 [notice]::after {
-  --size: 22px;
+  --size: 18px;
   position: absolute;
   content: attr(notice);
   bottom: 0;
@@ -200,7 +227,7 @@ html[data-mode="dark"] *[toolTip]::after {
   border-radius: 50%;
   background-color: #f55;
   color: #fff;
-  font-size: calc(9px + 0.2vw);
+  font-size: calc(7px + 0.2vw);
   max-width: var(--size);
   max-height: var(--size);
   width: var(--size);

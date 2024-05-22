@@ -1,5 +1,5 @@
 <template>
-  <div id="articlePage" class="fade h-screen">
+  <div id="articlePage" class="h-screen">
     <the-nav :hasAccount="hasAccount" />
     <!-- <base-card class="sticky top-0 left-0"> </base-card> -->
     <div class="h-full">
@@ -8,17 +8,19 @@
       >
         <base-card class="hidden lg:block flex-grow">
           <div>
-            <ul>
+            <ul class="space-y-1">
               <li
                 v-for="(i, ind) in sections"
                 :key="ind"
-                :class="selectedCompo == ind ? 'ring-1 ring-mainColor' : ''"
-                class="flex items-center justify-between cursor-pointer hover:dark:bg-dark3Color hover:bg-light3Color p-1 rounded-md mt-2 hover:scale-105 transition"
+                :class="
+                  selectedCompo == ind
+                    ? 'bg-light3Color dark:bg-dark3Color'
+                    : ''
+                "
+                class="flex text-xs items-center justify-between p-2 rounded-md hover:scale-105 transition hover:bg-light3Color hover:dark:bg-dark3Color cursor-pointer"
                 @click="selectedCompo = ind"
               >
-                <span :class="selectedCompo == ind ? 'text-mainColor' : ''"
-                  >{{ i.name }}
-                </span>
+                <span>{{ i.name }} </span>
                 <span
                   :notice="
                     i.coputedName
@@ -32,7 +34,7 @@
                 >
                   <the-icon
                     :icon="i.icon"
-                    class="bg-dark2Color dark:bg-light2Color dark:text-dark2Color"
+                    class="dark:bg-lightColor dark:text-darkColor text-lightColor bg-darkColor p-0.5 w-7 h-7"
                   />
                 </span>
               </li>
@@ -59,21 +61,21 @@
                 i.name
               }}</span>
               <span
-                  :notice="
-                    i.coputedName
-                      ? this[i.coputedName].length > 0
-                        ? this[i.coputedName].length > 99
-                          ? '+99'
-                          : this[i.coputedName].length
-                        : null
+                :notice="
+                  i.coputedName
+                    ? this[i.coputedName].length > 0
+                      ? this[i.coputedName].length > 99
+                        ? '+99'
+                        : this[i.coputedName].length
                       : null
-                  "
-                >
-                  <the-icon
-                    :icon="i.icon"
-                    class="bg-dark2Color dark:bg-light2Color dark:text-dark2Color"
-                  />
-                </span>
+                    : null
+                "
+              >
+                <the-icon
+                  :icon="i.icon"
+                  class="bg-dark2Color dark:bg-light2Color dark:text-dark2Color w-7 h-7"
+                />
+              </span>
             </li>
           </ul>
         </slide-side>
@@ -90,6 +92,11 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import allArticles from "./components/allArticles.vue";
+import myArticles from "./components/myArticles.vue";
+import savedArticles from "./components/savedArticles.vue";
+
 // import router from "@/router";
 export default {
   // created() {
@@ -106,6 +113,11 @@ export default {
   //     // location.href = login.path;
   //   }
   // },
+  components: {
+    allArticles,
+    myArticles,
+    savedArticles,
+  },
   props: ["hasAccount"],
   data() {
     return {
@@ -135,15 +147,29 @@ export default {
   },
 
   computed: {
-    getOwnerPosts() {
-      return this.$store.getters.getOwnerPosts;
-    },
+    ...mapGetters("posts", {
+      postById: "getUserPosts",
+
+      allPosts: "getAllPosts",
+    }),
     getSavedPosts() {
-      return this.$store.getters.getSavedPosts;
+      return this.ownerData.savedPosts;
     },
+    getOwnerPosts() {
+      return this.postById(this.$store.state.personalData.id);
+    },
+
     ownerData() {
       return this.$store.state.personalData;
     },
+  },
+  mounted() {
+    for (let i = 0; i < this.sections.length; i++) {
+      if (this.sections[i].compoName == this.$route.params.id) {
+        this.selectedCompo = i;
+        break;
+      }
+    }
   },
 };
 </script>

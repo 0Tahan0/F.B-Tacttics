@@ -3,11 +3,12 @@
     <div
       id="The_Window_Vue"
       dir="rtl"
-      class="fixed top-0 left-0 h-screen w-screen z-50"
+      class="fixed top-0 left-0 h-screen w-screen z-50 select-none"
       :class="hasBlur"
+      @contextmenu.prevent="() => null"
     >
       <base-card
-        class="flex flex-col justify-center mx-auto  fixed rounded bg-lightColor dark:bg-darkColor"
+        class="flex m-0 my-0 flex-col justify-center mx-auto fixed rounded bg-lightColor dark:bg-darkColor"
         :class="checkSizeShape"
         :style="
           fullWindow ? 'max-height:100%;' : 'max-height: calc(100% - 15vh)'
@@ -37,6 +38,7 @@
           class="overflow-y-auto p-3 w-full"
           :class="fullWindow ? 'h-full ' : ''"
         >
+        
           <slot
             ><div
               class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-gray-600"

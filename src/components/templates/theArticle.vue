@@ -1,9 +1,6 @@
 <template>
   <div>
-    <p
-      ref="theText"
-      class="w-full break-words whitespace-pre-line leading-7 text-xs md:text-sm xl:text-md"
-    >
+    <p ref="theText" class="w-full break-words whitespace-pre-line leading-7">
       <slot>{{ text }}</slot>
     </p>
     <div
@@ -11,9 +8,7 @@
       @click="toggleShow($event)"
       class="text-gray-400 cursor-pointer text-bold ms-auto w-fit"
       style="font-size: calc(10px + 0.2vw)"
-    >
-      
-    </div>
+    ></div>
   </div>
 </template>
 <script>

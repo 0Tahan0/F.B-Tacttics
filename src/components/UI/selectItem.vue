@@ -6,7 +6,7 @@
     :target="target"
     :value="value"
     @click="$emit('click', value)"
-    class="py-1 px-2 block cursor-pointer font-medium hover:bg-mainColor/30 hover:text-mainColor"
+    
   >
     <slot></slot>
   </a>

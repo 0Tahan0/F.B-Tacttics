@@ -24,7 +24,7 @@ const app = createApp(App);
 
 import theNav from "@/components/layout/theNav.vue";
 app.component("the-nav", theNav);
-import slideSide from "@/components/layout/slideSide.vue";
+import slideSide from "@/components/templates/slideSide.vue";
 app.component("slide-side", slideSide);
 import theLogo from "@/components/layout/theLogo.vue";
 app.component("the-logo", theLogo);
@@ -54,17 +54,28 @@ import selectItem from "@/components/UI/selectItem.vue";
 app.component("select-item", selectItem);
 import theMenu from "@/components/UI/theMenu.vue";
 app.component("the-menu", theMenu);
-
+import contextMenu from "@/components/UI/contextMenu.vue";
+app.component("context-menu", contextMenu);
+import theAlert from "@/components/UI/theAlert.vue";
+app.component("the-alert", theAlert);
+import theVideo from "@/components/UI/theVideo.vue";
+app.component("the-video", theVideo);
 // templates
 
 import theArticle from "@/components/templates/theArticle.vue";
 app.component("the-article", theArticle);
+import circularProgress from "@/components/templates/circularProgress.vue";
+app.component("circular-progress", circularProgress);
 
 import theIcon from "@/components/templates/theIcon.vue";
 app.component("the-icon", theIcon);
+import theViewer from "@/components/templates/theViewer.vue";
+app.component("the-viewer", theViewer);
 
-import thePost from "@/components/artticlesComp/thePost.vue";
+import thePost from "@/components/thePost.vue";
 app.component("the-post", thePost);
+import theMessage from "@/components/theMessage.vue";
+app.component("the-message", theMessage);
 
 import theSwiper from "@/components/templates/theSwiper.vue";
 app.component("the-swiper", theSwiper);
@@ -74,17 +85,12 @@ app.component("the-carousel", theCarousel);
 import theWindow from "@/components/templates/theWindow.vue";
 app.component("the-window", theWindow);
 
-import theComment from "@/components/artticlesComp/theComment.vue";
+import theComment from "@/components/theComment.vue";
 app.component("the-comment", theComment);
 
 app.component("fs-icon", FontAwesomeIcon);
 // --------------------------------
-import allArticles from "./components/artticlesComp/articlesSections/allArticles.vue";
-app.component("all-articles", allArticles);
-import myArticles from "./components/artticlesComp/articlesSections/myArticles.vue";
-app.component("my-articles", myArticles);
-import savedArticles from "./components/artticlesComp/articlesSections/savedArticles.vue";
-app.component("saved-articles", savedArticles);
+
 // --------------------------------
 app.use(VueAxios, axios);
 app.use(store);

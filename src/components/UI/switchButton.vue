@@ -1,6 +1,6 @@
 <template>
   <button
-    class="w-16 h-7 block cursor-pointer rounded-full backdrop-blur-md border-2 border-slate-400 before:bg-slate-400 relative before:absolute before:top-1/2 before:left-1 before:-translate-y-1/2 before:w-5 before:h-5 before:rounded-full before:transition-all before:duration-300 before:border before:shadow-black/50 before:shadow-md shadow-md shadow-gray-800/50"
+    class="w-16 h-7 block cursor-pointer rounded-full backdrop-blur-md before:bg-slate-400 relative before:absolute before:top-1/2 before:left-1 before:-translate-y-1/2 before:w-5 before:h-5 before:rounded-full before:transition-all before:duration-300 before:border before:shadow-black/50 before:shadow-md shadow shadow-gray-800/50"
     :switched="switched"
     :class="val ? 'switched bg-mainColor before:bg-slate-100 ' : ''"
     @click="changeValue()"
@@ -9,7 +9,7 @@
 
 <script>
 export default {
-  emits:['switch','input'],
+  emits: ["switch", "input"],
 
   props: {
     switched: {

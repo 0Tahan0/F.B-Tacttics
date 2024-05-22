@@ -1,7 +1,8 @@
 <template>
   <div
+    @contextmenu.prevent="() => null"
     id="app"
-    class="dark:bg-darkColor dark:text-lightColor text-darkColor transition-colors duration-500 h-full bg-lightColor"
+    class="dark:bg-darkColor dark:text-lightColor text-darkColor transition-colors duration-500 h-full bg-lightColor select-none"
   >
     <RouterView
       :hasAccount="hasAccount"
@@ -29,7 +30,7 @@ export default {
     },
   },
   mounted() {
-    // this.hasAccount = getCookie("userid") != null;
+    // this.hasAccount = getCookie("ftb_userId") != null;
   },
 };
 </script>

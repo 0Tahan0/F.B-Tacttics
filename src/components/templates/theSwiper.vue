@@ -64,7 +64,7 @@ export default {
     if (swiperItems) {
       this.length = swiperItems.length;
       swiperItems.forEach((el) => {
-        el.style = `min-width:100%; width:100% ;transition:transform .5s;`;
+        el.style = `min-width:100%; max-width:100%; width:100% ;transition:transform .5s;`;
       });
       let start = 0;
       let end = 0;
@@ -75,12 +75,17 @@ export default {
       swiper.addEventListener("touchend", (e) => {
         end = e.changedTouches[0].clientX;
         if (Math.abs(start - end) > 50) {
-          if (start > end ) {
+          if (start > end) {
             this.current--;
           } else if (end >= start) this.current++;
         }
       });
     }
+  },
+  updated() {
+    const swiper = this.$refs.swiper;
+    const swiperItems = swiper.querySelectorAll("[swiper-item]");
+    this.length = swiperItems.length;
   },
 };
 </script>

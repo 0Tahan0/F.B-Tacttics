@@ -1,5 +1,5 @@
 <template>
-  <div class="home fade">
+  <div class="home">
     <!-- nav -->
     <div id="nv" class="shadow-lg">
       <the-nav :hasAccount="hasAccount" />
@@ -122,8 +122,8 @@
     </div>
     <!-- end intro -->
     <!-- content -->
-    <div>
-      <base-card class="container mx-auto mt-10">
+    <div class="bg-base">
+      <div class="container mx-auto mt-10 p-2">
         <div class="mt-10" v-for="(i, ind) in taps" :key="ind">
           <base-title :id="i.link"> #{{ i.name }} </base-title>
           <base-card>
@@ -140,7 +140,7 @@
             >عرض المزيد من المقالات</router-link
           ></base-button
         >
-      </base-card>
+      </div>
       <div>
         <div class="bg-mainColor py-5" id="famousArticles">
           <base-title class="text-white text-center">أشهر المقالات</base-title>
@@ -148,20 +148,6 @@
         <base-card class="container mx-auto mt-10">
           <!-- <base-title>أشهر المقالات</base-title> -->
           <the-swiper class="" style="height: 600px">
-            <div
-              swiper-item
-              v-for="i in getPosts"
-              :key="i.postId"
-              class="pointer-events-none select-none"
-              
-            >
-              <base-card class="w-fit"
-                ><base-title
-                  >عدد تفاعلات {{ i.likes.likesCount }}</base-title
-                ></base-card
-              >
-              <the-post :info="i"></the-post>
-            </div>
             <div
               swiper-item
               v-for="i in getPosts"
@@ -214,21 +200,21 @@
             <a href="#">
               <the-icon
                 :icon="['fab', 'facebook']"
-                class="bg-facebook"
+                class="bg-facebook p-1"
                 toolTip="facebook"
               />
             </a>
             <a href="#">
               <the-icon
                 :icon="['fab', 'instagram']"
-                class="bg-instagram"
+                class="bg-instagram p-1"
                 toolTip="instagram"
               />
             </a>
             <a href="#">
               <the-icon
                 :icon="['fab', 'google']"
-                class="bg-google"
+                class="bg-google p-1"
                 toolTip="google"
               />
             </a>
@@ -254,9 +240,10 @@ export default {
   },
   computed: {
     getPosts() {
-      return this.$store.state.info;
+      return this.$store.getters["posts/getAllPosts"];
     },
   },
+
   data() {
     return {
       taps: [

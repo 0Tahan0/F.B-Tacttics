@@ -5,7 +5,7 @@
     </div>
     <base-card
       v-show="show"
-      class="absolute top-full min-w-24 z-10 text-inherit arrow max-h-96"
+      class="absolute top-full min-w-24 z-10 text-inherit arrow max-h-96 fade"
       :class="isRight"
     >
       <slot></slot>

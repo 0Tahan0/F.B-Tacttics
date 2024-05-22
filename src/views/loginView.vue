@@ -3,11 +3,15 @@
     <div class="h-full w-full">
       <div class="container mx-auto h-full flex flex-col justify-center">
         <!-- max-w-screen-sm -->
-        <div
-          class="flex flex-col-reverse md:flex-row items-center justify-evenly"
-        >
-          <base-card class="md:w-1/2 shadow-xl z-20">
-            <form action="/" class="grid gap-3">
+        <base-card class="w-1/2 mx-auto p-2">
+          <div
+            class="w-full pt-10 bg-base-white rounded-t-md transition-colors duration-500"
+            :class="!noValidations ? 'bg-mainColor' : 'bg-slate-500'"
+          >
+            <form
+              action=""
+              class="grid gap-3 bg-light2Color dark:bg-dark2Color"
+            >
               <div class="text-center">
                 <!-- <p class="first-letter:text-mainColor text-3xl">F.B Tacttics</p> -->
               </div>
@@ -58,15 +62,16 @@
                 value="تسجيل الدخول"
                 placeholder="name"
                 class="before:bg-mainColor py-2"
+                @click.prevent="submit()"
               />
             </form>
-          </base-card>
-          <div
+          </div>
+          <!-- <div
             class="md:w-1/2 w-full h-full flex flex-col justify-center items-center relative before:absolute before:w-screen before:h-full before:top-0 before:left-1/2 before:-translate-x-1/2 before:-z-10 before:bg-gradient-to-r before:from-mainColor before:from-45% before:to-transparent before:to-50% z-10"
           >
             <the-logo bgNone />
-          </div>
-        </div>
+          </div> -->
+        </base-card>
       </div>
     </div>
     <base-button
@@ -78,7 +83,10 @@
     </base-button>
   </div>
 </template>
+
 <script>
+
+import { mapMutations } from "vuex";
 export default {
   data() {
     return {
@@ -126,6 +134,18 @@ export default {
     },
   },
   methods: {
+    ...mapMutations("users", {
+      createUser: "createUser",
+    }),
+    submit() {
+      this.createUser({
+        name: this.inputs.username.value,
+        email: this.inputs.email.value,
+        password: this.inputs.password.value,
+      });
+      
+      // this.$router.push({path:'/'})
+    },
     togglePass() {
       if (this.inputs.password.type == "password") {
         this.inputs.password.type = "text";
@@ -136,7 +156,7 @@ export default {
       }
     },
     checkName(val) {
-      const nospecial = /[^a-zA-Z0-9أ-ي\s]/gi;
+      const nospecial = /[^a-zA-Z0-9أ-ي\sء]/gi;
       if (val.trim() == "" || val.trim() == null) {
         this.inputs.username.validaion.status = false;
         this.inputs.username.validaion.msg = "الحقل فارغ";

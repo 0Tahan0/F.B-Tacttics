@@ -21,9 +21,13 @@ module.exports = {
         lightColor: "#eaeaea",
         light2Color: "#eee",
         light3Color: "#cfcfcf",
-        darkColor: "#050510",
-        dark2Color: "#151520",
-        dark3Color: "#303035",
+        darkColor: "#000",
+        dark2Color: "#111",
+        dark3Color: "#222",
+
+        // darkColor: "#050510",
+        // dark2Color: "#151520",
+        // dark3Color: "#303035",
       },
       gridTemplateColumns: {
         // Simple 16 column grid

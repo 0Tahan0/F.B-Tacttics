@@ -70,7 +70,9 @@ export default {
     },
     validaion: {
       type: Object,
-      default: () => {},
+      default: function () {
+        return { status: null };
+      },
     },
     toolTip: {
       type: String,
@@ -79,7 +81,7 @@ export default {
   },
   computed: {
     isField() {
-      let cls = "relative  ring-2 ";
+      let cls = "relative  ring-1 ";
       if (this.icon) cls += " px-2 ";
       if (this.validErorr) cls += "  bg-red-500 bg-opacity-10 ring-red-500/50";
       else if (this.validErorr == false)

@@ -79,5 +79,10 @@ export default {
       }
     }
   },
+  updated() {
+    const carousel = this.$refs.carousel;
+    const carouselTtems = carousel.querySelectorAll("[carousel-item]");
+    this.length = carouselTtems.length;
+  },
 };
 </script>

@@ -1,19 +1,26 @@
 <template>
-  <div class="mb-5 relative" ref="replyBox">
+  <div class="mb-5 relative" ref="replyBox" :class="isWriter ? 'order-1' : ''">
     <div class="flex relative cmt" ref="comment">
       <!-- header -->
-
-      <div class="min-w-8 min-h-8 w-8 h-8 md:w-10 md:h-10 rounded-full">
+      <div
+        class="min-w-8 min-h-8 w-8 h-8 md:w-10 md:h-10 rounded-full"
+        :class="isAdmain ? 'relative' : ''"
+      >
         <img
-          :src="rep.userImg"
-          alt="user photo"
+          :src="userData.img"
+          :alt="`${userData.name} photo`"
           class="rounded-full w-full h-full object-cover"
         />
+        <fs-icon
+          v-if="isAdmain"
+          :icon="['fas', 'crown']"
+          class="bg-yellow-500 text-white rounded-full p-0.5 text-xs absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2"
+        ></fs-icon>
       </div>
 
       <!-- end header -->
       <!-- wrapper -->
-      <div class="min-w-52 ms-3 max-w-80 ">
+      <div class="min-w-52 ms-3 max-w-80">
         <div
           comment-box
           id="rep-content"
@@ -22,11 +29,23 @@
         >
           <!-- name -->
           <div class="flex p-1">
-            <the-link
+            <!-- <the-link
               router
               link=""
               class="text-xs font-bold text-gray-600 dark:text-gray-300 select-none"
-              >{{ rep.userName }}</the-link
+              >{{ userData.name }}</the-link
+            > -->
+            <router-link
+              :to="{
+                path: isWriter ? `profile` : `userProfile`,
+
+                query: {
+                  username: userData.name,
+                  id: userData.id,
+                },
+              }"
+              class="text-xs font-bold text-gray-600 dark:text-gray-300 select-none"
+              >{{ userData.name }}</router-link
             >
             <small
               v-if="isWriter"
@@ -76,7 +95,9 @@
               أعجبني
             </button>
             <!-- replies button -->
+
             <button
+              v-if="!isWriter"
               @click="setReply()"
               class="text-xs ms-3 cursor-pointer md:hover:text-mainColor active:text-mainColor outline-none"
             >
@@ -182,7 +203,7 @@
 
     <div
       v-if="rep.type == 'comment'"
-      class="w-2 dark:bg-slate-900 bg-lightColor absolute top-1/2 right-4 md:right-5 translate-x-1/2 -translate-y-1/2 rounded-full"
+      class="w-2 dark:bg-dark3Color bg-light3Color absolute top-1/2 right-4 md:right-5 translate-x-1/2 -translate-y-1/2 rounded-full"
       style="height: calc(100% - 8rem)"
     ></div>
     <div
@@ -206,7 +227,7 @@
           v-for="(i, ind) in rep.replies"
           :key="ind"
           :rep="i"
-          :owner="rep.userName"
+          :owner="userData.name"
           :ownerId="rep.userId"
           :focused="focused"
           :index="ind"
@@ -241,18 +262,25 @@
 </template>
 <script>
 // import list from "@/setOptionList";
+
 export default {
   emits: ["like", "reply", "delete", "update"],
   props: ["rep", "owner", "ownerId", "focused", "index"],
   data() {
     return {
-      showReplies: false,
+      showReplies: this.showRepliesIfLessThenTow(),
       optionalList: false,
       removingWindow: false,
       commentPressed: false,
     };
   },
   computed: {
+    userData() {
+      return this.$store.getters["users/getUserById"](this.rep.userId);
+    },
+    isAdmain() {
+      return this.userData.type == "admin";
+    },
     isMobile() {
       return document.body.getBoundingClientRect().width < 768;
     },
@@ -265,12 +293,7 @@ export default {
       }
       return "bg-lightColor dark:bg-dark2Color";
     },
-    getCommentCount() {
-      return this.$store.getters.getCommentCount(this.info.postId);
-    },
-    getPostreplies() {
-      return this.$store.getters.getPostreplies(this.info.postId);
-    },
+
     getLikeStatus() {
       return this.rep.likes.likedUsers.find(
         (el) => el == this.$store.state.personalData.id
@@ -281,6 +304,11 @@ export default {
     },
   },
   methods: {
+    showRepliesIfLessThenTow() {
+      return this.rep.type == "comment" && this.rep.replies.length < 2
+        ? true
+        : false;
+    },
     toggleLike(id = undefined) {
       this.$emit(
         "like",
